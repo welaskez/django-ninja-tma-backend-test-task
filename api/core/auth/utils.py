@@ -1,6 +1,6 @@
 from aiogram.utils.web_app import WebAppInitData, safe_parse_webapp_init_data
 from config import settings
-from ninja.errors import AuthenticationError
+from ninja.errors import HttpError
 
 
 def validate_init_data(query_str: str) -> WebAppInitData:
@@ -10,6 +10,6 @@ def validate_init_data(query_str: str) -> WebAppInitData:
             init_data=query_str,
         )
     except ValueError:
-        raise AuthenticationError
+        raise HttpError(status_code=401, message="Invalid query string")
 
     return init_data

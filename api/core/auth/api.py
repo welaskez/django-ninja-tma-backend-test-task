@@ -1,4 +1,4 @@
-from ninja.errors import AuthenticationError
+from ninja.errors import HttpError
 from ninja.router import Router
 from pydantic import ValidationError
 from users.models import User
@@ -33,8 +33,8 @@ def refresh_tokens(request, body: RefreshBody):
     try:
         payload = TokenInfo.model_validate(decode_jwt(body.refresh_token))
     except ValidationError:
-        raise AuthenticationError
+        raise HttpError(status_code=401, message="Invalid token")
     if payload.type == TokenType.REFRESH:
         return get_tokens(sub=payload.sub)
 
-    raise AuthenticationError
+    raise HttpError(status_code=401, message="Invalid token type")

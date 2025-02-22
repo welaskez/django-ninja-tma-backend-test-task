@@ -26,5 +26,11 @@ class User(AbstractUser):
     )
     upgrades = models.ManyToManyField(Upgrade, related_name="users")
 
+    @property
+    def total_income_per_second(self):
+        base_income = self.income_per_second
+        upgrade_bonus = sum(self.upgrades.values_list("boost", flat=True))
+        return base_income + upgrade_bonus
+
     def __str__(self) -> str:
         return self.username

@@ -6,7 +6,7 @@ from .models import User
 class UserRead(ModelSchema):
     class Meta:
         model = User
-        fields = ["username", "photo", "balance", "income_per_second"]
+        fields = ["username", "photo", "balance", "income_per_second", "upgrades"]
 
 
 class UserUpdate(Schema):

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from upgrades.models import Upgrade
 
 
 class User(AbstractUser):
@@ -23,6 +24,7 @@ class User(AbstractUser):
         default=1.0,
         verbose_name=_("Income per second"),
     )
+    upgrades = models.ManyToManyField(Upgrade, related_name="users")
 
     def __str__(self) -> str:
         return self.username

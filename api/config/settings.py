@@ -97,6 +97,17 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+# JWT AUTH CONFIG
+PRIVATE_KEY_PATH = BASE_DIR / "certs" / "jwt-private.pem"
+
+PUBLIC_KEY_PATH = BASE_DIR / "certs" / "jwt-public.pem"
+
+ALGORITHM = "RS256"
+
+ACCESS_TOKEN_EXPIRE_MINUTES = 15
+
+REFRESH_TOKEN_EXPIRE_DAYS = 30
+
 # FOR PROD
 # SECURE_HSTS_SECONDS = 31536000
 

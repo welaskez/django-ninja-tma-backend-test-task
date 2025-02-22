@@ -17,6 +17,8 @@ services:
     restart: unless-stopped
     ports:
       - "8080:8000"
+    environment:
+      - SERVICE_TYPE=api
     networks:
       app:
     develop:
@@ -26,6 +28,19 @@ services:
           target: /app
         - action: rebuild
           path: ./poetry.lock
+
+  bot:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    container_name: bot
+    env_file:
+      - api/.env
+    restart: unless-stopped
+    environment:
+      - SERVICE_TYPE=bot
+    networks:
+      app:
 
   postgres:
     image: postgres:16

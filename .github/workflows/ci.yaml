@@ -25,4 +25,14 @@ jobs:
         run: pip install --upgrade pip && pip install -r requirements.txt
 
       - name: run tests
+        env:
+          BOT_TOKEN: YOUR_TOKEN
+          SECRET_KEY: ab489f2bdd0e4d22e6b868145f50513e5b8492672a272ddf49b0c12c568744a3
+          DEBUG: 1
+          ALLOWED_HOSTS: localhost,127.0.0.1
+          DB_NAME: test_db
+          DB_USER: test_admin
+          DB_PASSWORD: 1234
+          DB_HOST: postgres
+          DB_PORT: 5432
         run: cd api && ./manage.py test

@@ -7,4 +7,6 @@ router = Router()
 
 @router.get(path="/me", response=UserRead)
 def get_user(request):
-    return request.auth
+    user = request.auth
+    user.update_balance()
+    return user

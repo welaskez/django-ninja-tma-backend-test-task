@@ -12,6 +12,16 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_DB: test_db
+          POSTGRES_USER: test_admin
+          POSTGRES_PASSWORD: 1234
+        ports:
+          - 5432:5432
+
     steps:
       - name: repo checkout
         uses: actions/checkout@v4

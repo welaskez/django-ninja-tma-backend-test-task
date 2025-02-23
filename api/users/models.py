@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import gettext_lazy as _
+from tasks.models import Task
 from upgrades.models import Upgrade
 
 
@@ -28,6 +29,7 @@ class User(AbstractUser):
         verbose_name=_("Income per second"),
     )
     upgrades = models.ManyToManyField(Upgrade, related_name="users")
+    tasks = models.ManyToManyField(Task, related_name="users")
 
     def update_balance(self):
         current_time = now()

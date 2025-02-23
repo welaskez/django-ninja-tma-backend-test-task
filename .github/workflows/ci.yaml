@@ -21,6 +21,11 @@ jobs:
           POSTGRES_PASSWORD: 1234
         ports:
           - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U test_admin -d test_db"
+          --health-interval=5s
+          --health-timeout=5s
+          --health-retries=5
 
     steps:
       - name: repo checkout
@@ -43,9 +48,10 @@ jobs:
           DB_NAME: test_db
           DB_USER: test_admin
           DB_PASSWORD: 1234
-          DB_HOST: postgres
+          DB_HOST: 127.0.0.1
           DB_PORT: 5432
         run: |
+          sleep 5
           mkdir -p api/certs
           openssl genrsa -out api/certs/jwt-private.pem 2048
           openssl rsa -in api/certs/jwt-private.pem -outform PEM -pubout -out api/certs/jwt-public.pem

@@ -1,4 +1,4 @@
-from ninja import ModelSchema, Schema
+from ninja import ModelSchema
 
 from .models import User
 
@@ -13,8 +13,3 @@ class UserRead(ModelSchema):
     @staticmethod
     def resolve_total_income_per_second(obj: User) -> float:
         return obj.total_income_per_second
-
-
-class UserUpdate(Schema):
-    balance: int | None = None
-    income_per_second: int | None = None

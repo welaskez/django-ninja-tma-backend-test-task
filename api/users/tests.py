@@ -4,7 +4,6 @@ from ninja.testing import TestClient
 
 from .api import router
 from .models import User
-from .schemas import UserRead
 
 
 class UsersTest(TestCase):
@@ -14,10 +13,22 @@ class UsersTest(TestCase):
 
         self.client = TestClient(router, headers={"Authorization": f"Bearer {tokens.access_token}"})
 
-    def test_me(self):
+    def test_get_user(self):
         response = self.client.get("/me")
 
-        expected_response = UserRead.from_orm(self.user_1).model_dump()
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json()["username"], self.user_1.username)
+        self.assertEqual(response.json()["balance"], "0.00")
+
+    def test_update_balance_success(self):
+        response = self.client.post(path="/update_balance?balance=50")
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), expected_response)
+        self.user_1.refresh_from_db()
+        self.assertEqual(float(self.user_1.balance), 50.0)
+
+    def test_update_balance_invalid(self):
+        response = self.client.post(path="/update_balance?balance=-10")
+
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json()["detail"], "Invalid balance")

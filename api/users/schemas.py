@@ -12,4 +12,4 @@ class UserRead(ModelSchema):
 
     @staticmethod
     def resolve_total_income_per_second(obj: User) -> float:
-        return obj.total_income_per_second
+        return float(obj.total_income_per_second)

@@ -4,7 +4,7 @@ from ninja.router import Router
 from users.models import User
 
 from .models import Upgrade
-from .schemas import UpgradeRead
+from .schemas import BuyUpgradeResponse, UpgradeRead
 
 router = Router()
 
@@ -14,7 +14,7 @@ def get_upgrades(request):
     return Upgrade.objects.all()
 
 
-@router.post(path="/buy/{upgrade_id}", response=UpgradeRead)
+@router.post(path="/buy/{upgrade_id}", response=BuyUpgradeResponse)
 def buy_upgrade(request, upgrade_id: int):
     upgrade = get_object_or_404(Upgrade, id=upgrade_id)
     user = get_object_or_404(User, id=request.auth.id)
@@ -27,4 +27,4 @@ def buy_upgrade(request, upgrade_id: int):
     user.upgrades.add(upgrade)
     user.save()
 
-    return upgrade
+    return BuyUpgradeResponse(success=True, upgrade=upgrade, message="Upgrade successfully bought")

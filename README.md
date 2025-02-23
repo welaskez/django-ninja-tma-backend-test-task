@@ -14,6 +14,10 @@ mv pg_db.env.example pg_db.env
 
 ### 2. Генерация сертификатов для jwt
 ```bash
+mkdir -p api/certs
+```
+
+```bash
 openssl genrsa -out api/certs/jwt-private.pem 2048  
 ```
 

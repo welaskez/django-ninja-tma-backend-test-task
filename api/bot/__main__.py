@@ -1,11 +1,13 @@
 import asyncio
 import logging
 
-from aiogram import Bot, Dispatcher, types
+from aiogram import Dispatcher, types
 from aiogram.filters import CommandStart
 from config import settings
 
-bot = Bot(token=settings.BOT_TOKEN)
+from .utils import get_bot
+
+bot = get_bot()
 dp = Dispatcher()
 
 

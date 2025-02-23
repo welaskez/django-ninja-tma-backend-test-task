@@ -8,7 +8,7 @@ class UserRead(ModelSchema):
 
     class Meta:
         model = User
-        fields = ["username", "photo", "balance", "upgrades"]
+        fields = ["username", "photo", "balance", "upgrades", "tasks"]
 
     @staticmethod
     def resolve_total_income_per_second(obj: User) -> float:

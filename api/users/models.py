@@ -34,8 +34,8 @@ class User(AbstractUser):
     def update_balance(self):
         current_time = now()
 
-        time_difference = (current_time - (self.last_login or current_time)).total_seconds()
-        earned_tokens = self.income_per_second * Decimal(time_difference)
+        time_difference = Decimal((current_time - (self.last_login or current_time)).total_seconds())
+        earned_tokens = self.income_per_second * time_difference
 
         self.balance += earned_tokens
         self.last_login = current_time
@@ -43,9 +43,8 @@ class User(AbstractUser):
 
     @property
     def total_income_per_second(self):
-        base_income = self.income_per_second
-        upgrade_bonus = sum(self.upgrades.values_list("boost", flat=True))
-        return base_income + Decimal(upgrade_bonus)
+        upgrade_bonus = sum(Decimal(value) for value in self.upgrades.values_list("boost", flat=True))
+        return self.income_per_second + upgrade_bonus
 
     def __str__(self) -> str:
         return self.username

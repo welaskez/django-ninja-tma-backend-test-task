@@ -22,6 +22,9 @@ def complete_task(request, task_id: int):
     task = get_object_or_404(Task, id=task_id)
     user = get_object_or_404(User, id=request.auth.id)
 
+    if task in user.tasks.all():
+        return TaskCompletedRead(success=False, task=task, message="Task already completed")
+
     if task.type == "telegram":
         completed = asyncio.run(check_telegram_subscribe(link=task.link, tg_id=user.tg_id))
     else:

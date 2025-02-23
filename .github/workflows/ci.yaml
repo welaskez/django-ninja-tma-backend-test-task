@@ -35,7 +35,8 @@ jobs:
           DB_PASSWORD: 1234
           DB_HOST: postgres
           DB_PORT: 5432
-        run:
-          openssl genrsa -out api/certs/jwt-private.pem 2048 
+        run: |
+          mkdir -p api/certs
+          openssl genrsa -out api/certs/jwt-private.pem 2048
           openssl rsa -in api/certs/jwt-private.pem -outform PEM -pubout -out api/certs/jwt-public.pem
           cd api && ./manage.py test

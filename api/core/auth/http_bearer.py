@@ -1,6 +1,6 @@
 import jwt
 from django.shortcuts import get_object_or_404
-from ninja.errors import AuthenticationError
+from ninja.errors import HttpError
 from ninja.security import HttpBearer
 from users.models import User
 
@@ -15,6 +15,6 @@ class TelegramAuthBearer(HttpBearer):
             user = get_object_or_404(User, id=payload.sub)
             return user
         except jwt.ExpiredSignatureError:
-            raise AuthenticationError
+            raise HttpError(status_code=401, message="Token has expired")
         except jwt.InvalidTokenError:
-            raise AuthenticationError
+            raise HttpError(status_code=401, message="Invalid token")

@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     # apps
     "users.apps.UsersConfig",
     "upgrades.apps.UpgradesConfig",
+    "tasks.apps.TasksConfig",
 ]
 
 MIDDLEWARE = [

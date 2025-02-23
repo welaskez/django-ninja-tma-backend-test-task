@@ -14,3 +14,6 @@ class Task(models.Model):
     link = models.URLField(verbose_name=_("Task link"))
     reward = models.DecimalField(verbose_name=_("Task reward"), max_digits=10, decimal_places=2)
     type = models.CharField(verbose_name=_("Task type"), max_length=32, choices=TaskType)
+
+    def __str__(self):
+        return self.name
